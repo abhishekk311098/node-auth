@@ -1,0 +1,45 @@
+2024-01-24T15:45:10.405Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T15:45:10.411Z [[32mhttp[39m] POST /api/v1/auth/login 200 297 - 121.896 ms
+2024-01-24T17:03:32.997Z [[32mhttp[39m] POST /api/v1/auth/register 201 222 - 559.075 ms
+2024-01-24T17:03:39.803Z [[32mhttp[39m] POST /api/v1/auth/login 400 268 - 309.696 ms
+2024-01-24T17:03:52.695Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T17:03:52.712Z [[32mhttp[39m] POST /api/v1/auth/login 200 222 - 307.428 ms
+2024-01-24T17:08:37.090Z [[32mhttp[39m] DELETE /api/v1/student/65b1052c8391d1a35b56ca44 200 58 - 72.900 ms
+2024-01-24T17:09:03.254Z [[32mhttp[39m] DELETE /api/v1/student/65b1052c8391d1a35b56ca44 401 1386 - 9.996 ms
+2024-01-24T17:09:11.302Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T17:09:11.315Z [[32mhttp[39m] POST /api/v1/auth/login 200 222 - 192.536 ms
+2024-01-24T17:09:17.053Z [[32mhttp[39m] DELETE /api/v1/student/65b1052c8391d1a35b56ca44 200 58 - 357.841 ms
+2024-01-24T17:09:48.865Z [[32mhttp[39m] DELETE /api/v1/student/65b1052c8391d1a35b56ca44 200 58 - 110.725 ms
+2024-01-24T17:10:15.359Z [[32mhttp[39m] DELETE /api/v1/student/65b1052c8391d1a35b56ca44 500 343 - 82.037 ms
+2024-01-24T17:10:21.298Z [[32mhttp[39m] DELETE /api/v1/student/65b1052c8391d1a35b56ca44 500 343 - 76.562 ms
+2024-01-24T17:10:35.542Z [[32mhttp[39m] DELETE /api/v1/student/65b106a573f7e004330f319b 500 343 - 56.715 ms
+2024-01-24T17:11:20.616Z [[32mhttp[39m] POST /api/v1/student 201 322 - 196.525 ms
+2024-01-24T17:11:29.435Z [[32mhttp[39m] DELETE /api/v1/student/65b106a573f7e004330f319b 500 343 - 58.113 ms
+2024-01-24T17:11:42.527Z [[32mhttp[39m] DELETE /api/v1/student/65b144b879724f8569bc7c45 200 58 - 85.167 ms
+2024-01-24T17:21:41.596Z [[32mhttp[39m] DELETE /api/v1/student/65b144b879724f8569bc7c45 401 1386 - 18.999 ms
+2024-01-24T17:21:51.513Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T17:21:51.527Z [[32mhttp[39m] POST /api/v1/auth/login 200 222 - 362.827 ms
+2024-01-24T17:21:59.045Z [[32mhttp[39m] POST /api/v1/student 201 322 - 197.194 ms
+2024-01-24T17:22:35.785Z [[32mhttp[39m] DELETE /api/v1/student/65b147365f78c9d08bb0a88f 403 1446 - 18.035 ms
+2024-01-24T17:23:35.247Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T17:23:35.260Z [[32mhttp[39m] POST /api/v1/auth/login 200 223 - 436.069 ms
+2024-01-24T17:23:43.631Z [[32mhttp[39m] DELETE /api/v1/student/65b147365f78c9d08bb0a88f 200 58 - 69.217 ms
+2024-01-24T17:23:51.239Z [[32mhttp[39m] DELETE /api/v1/student/65b147365f78c9d08bb0a88f 500 396 - 146.571 ms
+2024-01-24T17:31:53.387Z [[32mhttp[39m] POST /api/v1/auth/register 400 170 - 34.961 ms
+2024-01-24T17:32:21.332Z [[32mhttp[39m] POST /api/v1/auth/register 400 179 - 9.815 ms
+2024-01-24T17:32:39.651Z [[32mhttp[39m] POST /api/v1/auth/register 400 141 - 11.020 ms
+2024-01-24T17:32:49.937Z [[32mhttp[39m] POST /api/v1/auth/register 500 793 - 161.982 ms
+2024-01-24T18:07:19.326Z [[32mhttp[39m] POST /api/v1/auth/register 201 226 - 189.964 ms
+2024-01-24T18:29:31.709Z [[32mhttp[39m] POST /api/v1/auth/login 500 1366 - 4.035 ms
+2024-01-24T18:30:54.628Z [[32mhttp[39m] POST /api/v1/auth/login 500 1374 - 8.025 ms
+2024-01-24T18:31:22.982Z [[32mhttp[39m] POST /api/v1/auth/login 500 1374 - 3.248 ms
+2024-01-24T18:31:36.829Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T18:31:36.845Z [[32mhttp[39m] POST /api/v1/auth/login 200 223 - 209.412 ms
+2024-01-24T18:45:08.168Z [[32mhttp[39m] GET /api/v1/student 201 43 - 46.834 ms
+2024-01-24T18:45:36.973Z [[32minfo[39m] User login with userName:abhi8798
+2024-01-24T18:45:36.980Z [[32mhttp[39m] POST /api/v1/auth/login 200 223 - 227.069 ms
+2024-01-24T18:45:41.897Z [[32mhttp[39m] POST /api/v1/student 201 322 - 71.972 ms
+2024-01-24T18:45:48.723Z [[32mhttp[39m] GET /api/v1/student 201 325 - 33.770 ms
+2024-01-24T18:55:10.438Z [[32mhttp[39m] GET /favicon.ico 404 1366 - 2.547 ms
+2024-01-24T18:55:29.028Z [[32mhttp[39m] GET /api/v1/student 201 325 - 69.094 ms
+2024-01-24T19:43:39.661Z [[32mhttp[39m] GET /api/v1/student 201 325 - 38.577 ms
