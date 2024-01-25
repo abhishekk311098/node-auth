@@ -10,7 +10,7 @@ const restrict = require("../Middleware/restrict");
 const router = express.Router();
 
 router.post("/", authenticate, addStudent);
-router.get("/", getAllStudent);
+router.get("/", authenticate, getAllStudent);
 router.delete(
   "/:id",
   authenticate,

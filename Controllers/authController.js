@@ -7,9 +7,14 @@ const sendMail = require("../Utils/email");
 const { CUSTOM_ERROR, STATUS_CODE } = require("../Utils/Constants");
 const { logger } = require("../Middleware/logging");
 
-const { EMAIL_AND_PASSWORD_MISSING, INCORRECT_CREDENTIALS, USER_NOT_FOUND } =
-  CUSTOM_ERROR;
-const { BAD_REQUEST, NOT_FOUND } = STATUS_CODE;
+const {
+  EMAIL_AND_PASSWORD_MISSING,
+  INCORRECT_CREDENTIALS,
+  USER_NOT_FOUND,
+  ERROR_SENDING_EMAIL,
+  WRONG_PASSWORD,
+} = CUSTOM_ERROR;
+const { BAD_REQUEST, NOT_FOUND, SUCCESS, INTERNAL_SERVER_ERROR,CREATED } = STATUS_CODE;
 
 const register = ErrorHandler(async (req, res, next) => {
   const validationRules = [
@@ -30,13 +35,12 @@ const register = ErrorHandler(async (req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .json({
-        status: "Error",
-        message: "Validation failed",
-        errors: errors.array(),
-      });
+    logger.error(errors.array());
+    return res.status(400).json({
+      status: "Error",
+      message: "Validation failed",
+      errors: errors.array(),
+    });
   }
 
   const { userName, email, password, confirmPassword } = req.body;
@@ -48,7 +52,8 @@ const register = ErrorHandler(async (req, res, next) => {
   });
   newUser.password = undefined;
 
-  res.status(201).json({ status: "Success", data: { user: newUser } });
+  logger.info(`User created: ${newUser._id}`);
+  res.status(CREATED).json({ status: "Success", data: { user: newUser } });
 });
 
 const login = ErrorHandler(async (req, res, next) => {
@@ -70,7 +75,7 @@ const login = ErrorHandler(async (req, res, next) => {
 
   logger.info(`User login with userName:${user.userName}`);
 
-  return res.status(200).json({
+  return res.status(SUCCESS).json({
     status: "success",
     data: { user },
   });
@@ -78,7 +83,7 @@ const login = ErrorHandler(async (req, res, next) => {
 
 const logout = ErrorHandler(async (req, res, next) => {
   req.session.destroy((err) => {
-    res.status(200).json({ message: "User logout successfully" });
+    res.status(SUCCESS).json({ message: "User logout successfully" });
   });
 });
 
@@ -106,8 +111,8 @@ const forgotPassword = ErrorHandler(async (req, res, next) => {
       subject: "Password change request recieved",
       message: message,
     });
-
-    res.status(200).json({
+    logger.info(`Password reset link send to the user email:${user.email}`);
+    res.status(SUCCESS).json({
       status: "success",
       message: "password reset link send to the user email.",
     });
@@ -116,12 +121,8 @@ const forgotPassword = ErrorHandler(async (req, res, next) => {
     user.passwordResetToken = undefined;
     user.passwordResetTokenExpires = undefined;
     await user.save({ validateBeforeSave: false });
-    return next(
-      new CustomError(
-        "There was an error sending password reset email. Please try again later",
-        500
-      )
-    );
+    logger.error(ERROR_SENDING_EMAIL);
+    return next(new CustomError(ERROR_SENDING_EMAIL, INTERNAL_SERVER_ERROR));
   }
 });
 
@@ -137,15 +138,16 @@ const resetPassword = ErrorHandler(async (req, res, next) => {
     passwordResetTokenExpires: { $gt: Date.now() },
   });
 
-  if (!user) next(new CustomError("Token is invalid or Expired", BAD_REQUEST));
+  if (!user) {
+    logger.error("Token is invalid or Expired");
+    next(new CustomError("Token is invalid or Expired", BAD_REQUEST));
+  }
 
   if (!password || !confirmPassword)
-    next(
-      new CustomError(
-        "Please provide password and confirm password",
-        BAD_REQUEST
-      )
-    );
+    logger.error(PLEASE_PROVIDE_PASSWORD);
+  next(
+    new CustomError(PLEASE_PROVIDE_PASSWORD, BAD_REQUEST)
+  );
 
   user.password = password;
   user.confirmPassword = confirmPassword;
@@ -155,27 +157,29 @@ const resetPassword = ErrorHandler(async (req, res, next) => {
 
   await user.save();
 
+  logger.info(`Password changed successfully for user:${user.userName}`);
   res
-    .status(200)
+    .status(SUCCESS)
     .json({ status: "success", message: "password changed successfully" });
 });
+
 
 const updatePassword = ErrorHandler(async (req, res, next) => {
   const { currentPassword, password, confirmPassword } = req.body;
 
   const user = await User.findById(req.session.user._id).select("+password");
   if (!(await user.comparePassword(currentPassword, user.password))) {
-    return next(
-      new CustomError("The current password you provided is wrong", BAD_REQUEST)
-    );
+    logger.error(WRONG_PASSWORD);
+    return next(new CustomError(WRONG_PASSWORD, BAD_REQUEST));
   }
 
   user.password = password;
   user.confirmPassword = confirmPassword;
   await user.save();
 
+  logger.info(`Password updated successfully for user:${user.userName}`);
   res
-    .status(200)
+    .status(SUCCESS)
     .json({ status: "success", message: "password updated successfully" });
 });
 

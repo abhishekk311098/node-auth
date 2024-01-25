@@ -14,9 +14,14 @@ const castErrorHandler = (err) => {
     return new CustomError(msg, 400);
 }
 
+const sessionExpired = (err) => {
+    const msg = `Please login againg session is expired`
+    return new CustomError(msg, 401);
+}
+
 const duplicateKeyErrorHandler = (err) => {
  const name = err.keyValue.name;
- const msg = `There is already a movie with name ${name}. Please use another name!`;
+ const msg = `There is already a student with name ${name}. Please use another name!`;
  
  return new CustomError(msg, 400);
 }
@@ -46,13 +51,13 @@ const prodErrors = (res, error) => {
 module.exports = (error, req, res, next) => {
     error.statusCode = error.statusCode || 500;
     error.status = error.status || 'error';
-
     if(process.env.NODE_ENV === 'development'){
         devErrors(res, error);
     } else if(process.env.NODE_ENV === 'production'){
         if(error.name === 'CastError') error = castErrorHandler(error);
         if(error.code === 11000) error = duplicateKeyErrorHandler(error);
         if(error.name === 'ValidationError') error = validationErrorHandler(error);
+        if(error.statusCode === 401) error = sessionExpired(error);
 
         prodErrors(res, error);
     }

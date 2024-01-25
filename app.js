@@ -31,7 +31,7 @@ app.use("/", express.static("Public"));
 
 app.use(morganMiddleware);
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/student", studentRouter);
+app.use("/api/v1/students", studentRouter);
 app.use("/api/v1/users", userRoute);
 
 app.all("*", (req, res, next) => {
