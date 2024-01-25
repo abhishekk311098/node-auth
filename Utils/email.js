@@ -20,6 +20,3 @@ const sendMail = async (option) => {
 };
 
 module.exports = sendMail;
-
-//jahrell.jovonni@falkcia.com
-//Test@12345
