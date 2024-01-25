@@ -39,21 +39,21 @@ const addStudent = ErrorHandler(async (req, res, next) => {
     skills,
     courses,
   });
-  res.status(CREATED).json({ status: "Success", data: { student } });
+  res.status(CREATED).json({ status: "success", data: { student } });
 });
 
 const getAllStudent = ErrorHandler(async (req, res, next) => {
   const students = await Student.find({});
-  res.status(SUCCESS).json({ status: "Success", data: { students } });
+  res.status(SUCCESS).json({ status: "success", data: { students } });
 });
 
 const deleteStudent = ErrorHandler(async (req, res, next) => {
   const user = await Student.deleteOne({ _id: req.params.id });
   if (user.deletedCount > 0) {
-    logger.info(`User deleted successfully`);
+    logger.info(`Student deleted successfully`);
     res
       .status(SUCCESS)
-      .json({ status: "success", message: "user deleted successfully" });
+      .json({ status: "success", message: "Student deleted successfully" });
   } else {
     logger.error(STUDENT_NOT_EXIST);
     next(new CustomError(STUDENT_NOT_EXIST, INTERNAL_SERVER_ERROR));

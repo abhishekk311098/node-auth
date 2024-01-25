@@ -10,9 +10,7 @@ process.on('uncaughtException', (err) => {
 
 const app = require('./app');
 
-mongoose.connect(process.env.CONN_STR, {
-    useNewUrlParser: true
-}).then((conn) => {
+mongoose.connect(process.env.CONN_STR).then((conn) => {
     //console.log(conn);
     console.log('DB Connection Successful');
 })

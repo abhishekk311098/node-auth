@@ -11,7 +11,6 @@ const { morganMiddleware } = require("./Middleware/logging");
 
 let app = express();
 app.use(helmet());
-
 let limiter = rateLimit({
   max: 500,
   windowMs: 60 * 60 * 1000,

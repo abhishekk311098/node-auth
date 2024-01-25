@@ -14,7 +14,14 @@ const {
   ERROR_SENDING_EMAIL,
   WRONG_PASSWORD,
 } = CUSTOM_ERROR;
-const { BAD_REQUEST, NOT_FOUND, SUCCESS, INTERNAL_SERVER_ERROR,CREATED } = STATUS_CODE;
+const {
+  BAD_REQUEST,
+  NOT_FOUND,
+  SUCCESS,
+  INTERNAL_SERVER_ERROR,
+  CREATED,
+  UNAUTHORIZED,
+} = STATUS_CODE;
 
 const register = ErrorHandler(async (req, res, next) => {
   const validationRules = [
@@ -117,7 +124,6 @@ const forgotPassword = ErrorHandler(async (req, res, next) => {
       message: "password reset link send to the user email.",
     });
   } catch (err) {
-    console.log(err);
     user.passwordResetToken = undefined;
     user.passwordResetTokenExpires = undefined;
     await user.save({ validateBeforeSave: false });
@@ -143,11 +149,8 @@ const resetPassword = ErrorHandler(async (req, res, next) => {
     next(new CustomError("Token is invalid or Expired", BAD_REQUEST));
   }
 
-  if (!password || !confirmPassword)
-    logger.error(PLEASE_PROVIDE_PASSWORD);
-  next(
-    new CustomError(PLEASE_PROVIDE_PASSWORD, BAD_REQUEST)
-  );
+  if (!password || !confirmPassword) logger.error(PLEASE_PROVIDE_PASSWORD);
+  next(new CustomError(PLEASE_PROVIDE_PASSWORD, BAD_REQUEST));
 
   user.password = password;
   user.confirmPassword = confirmPassword;
@@ -162,7 +165,6 @@ const resetPassword = ErrorHandler(async (req, res, next) => {
     .status(SUCCESS)
     .json({ status: "success", message: "password changed successfully" });
 });
-
 
 const updatePassword = ErrorHandler(async (req, res, next) => {
   const { currentPassword, password, confirmPassword } = req.body;
