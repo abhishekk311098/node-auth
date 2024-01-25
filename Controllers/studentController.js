@@ -4,6 +4,7 @@ const Student = require("../Models/Student");
 const ErrorHandler = require("../Utils/ErrorHandler");
 const CustomError = require("../Utils/CustomError");
 const { CUSTOM_ERROR, STATUS_CODE } = require("../Utils/Constants");
+const { logger } = require("../Middleware/logging");
 
 const { STUDENT_NOT_EXIST ,VALIDATION_FAILED} = CUSTOM_ERROR;
 const { CREATED, SUCCESS, INTERNAL_SERVER_ERROR,BAD_REQUEST } = STATUS_CODE;
@@ -14,15 +15,6 @@ const addStudent = ErrorHandler(async (req, res, next) => {
     body("lastName").notEmpty().withMessage("Last name is required"),
     body("userName").notEmpty().withMessage("Username is required"),
     body("email").isEmail().withMessage("Invalid email address"),
-    body("password")
-      .isLength({ min: 6 })
-      .withMessage("Password must be at least 6 characters long"),
-    body("confirmPassword").custom((value, { req }) => {
-      if (value !== req.body.password) {
-        throw new Error("Passwords do not match");
-      }
-      return true;
-    }),
     body("skills").isArray().withMessage("Skills must be an array"),
     body("courses").isArray().withMessage("Courses must be an array"),
   ];
